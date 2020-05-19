@@ -1,5 +1,5 @@
-const express = require("express");
-const routes = require("./src/routes");
+const express = require('express');
+const routes = require('./routes');
 
 const app = express();
 const PORTA = 3333;
