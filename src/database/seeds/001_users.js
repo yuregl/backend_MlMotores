@@ -1,5 +1,10 @@
-exports.seed = function (knex) {
+const bcrypt = require('bcrypt');
+const SaltBcrypt = require('../../authBcrypt');
+
+exports.seed = async function (knex) {
 	// Deletes ALL existing entries
+
+	const newPassword = await bcrypt.hash('123', SaltBcrypt.salt);
 	return knex('users')
 		.del()
 		.then(function () {
@@ -8,7 +13,7 @@ exports.seed = function (knex) {
 				{
 					name: 'yure',
 					surname: 'galdino',
-					password: '123',
+					password: newPassword,
 					numberPhone: '998352437',
 					email: 'yuregaldino@hotmail.com',
 				},
