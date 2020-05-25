@@ -33,7 +33,9 @@ module.exports = {
 	//LISTAGEM DE USUÁRIOS
 
 	async list(request, response) {
-		const results = await knex('users');
+		const results = await knex
+			.select('id', 'name', 'surname', 'numberPhone', 'email')
+			.from('users');
 
 		return response.json(results);
 	},
@@ -56,6 +58,10 @@ module.exports = {
 	async delete(request, response) {
 		try {
 			const { id } = request.params;
+
+			console.log(id);
+
+			await knex('products').where({ user_id: id }).del();
 
 			await knex('users').where({ id }).del();
 

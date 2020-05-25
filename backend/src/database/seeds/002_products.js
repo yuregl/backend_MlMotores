@@ -10,6 +10,12 @@ exports.seed = function (knex) {
 					status: 'EM_OBSERVACAO',
 					value: 0,
 				},
+				{
+					produto: 'Motor',
+					status: 'EM_OBSERVACAO',
+					value: 0,
+					user_id: 14,
+				},
 			]);
 		});
 };
