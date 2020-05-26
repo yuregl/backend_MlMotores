@@ -1,20 +1,18 @@
 exports.seed = function (knex) {
 	// Deletes ALL existing entries
-	return knex('products')
+	return knex('services')
 		.del()
 		.then(function () {
 			// Inserts seed entries
-			return knex('products').insert([
+			return knex('services').insert([
 				{
-					produto: "bomba d'água",
+					product: "bomba d'água",
 					status: 'EM_OBSERVACAO',
-					value: 0,
 				},
 				{
-					produto: 'Motor',
+					product: 'Motor',
 					status: 'EM_OBSERVACAO',
-					value: 0,
-					user_id: 14,
+					user_id: 1,
 				},
 			]);
 		});

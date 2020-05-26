@@ -1,27 +1,28 @@
 const knex = require('../database');
 
 module.exports = {
+	//look for service by id
+
 	async product(request, response) {
 		const { id } = request.params;
 
-		const produto = await knex.table('products').where({ id }).first();
+		const product = await knex.table('services').where({ id }).first();
 
-		if (!produto) {
+		if (!product) {
 			return response
 				.status(400)
 				.json({ error: 'Não foi achado nenhum produto com esse ID' });
 		}
 
-		return response.json(produto);
+		return response.json(product);
 	},
 
 	async create(request, response) {
-		const { produto, status, value, description } = request.body;
+		const { product, status, description } = request.body;
 
-		await knex('products').insert({
-			produto,
+		await knex('services').insert({
+			product,
 			status,
-			value,
 			description,
 		});
 
@@ -30,11 +31,11 @@ module.exports = {
 
 	async update(request, response) {
 		const { id } = request.params;
-		const { produto, status, value, description } = request.body;
+		const { product, status, value, description } = request.body;
 
 		await knex
-			.table('products')
-			.update({ produto, status, value, description })
+			.table('services')
+			.update({ product, status, value, description })
 			.where({ id });
 
 		return response.send();
@@ -43,7 +44,7 @@ module.exports = {
 	async deleteID(request, response) {
 		try {
 			const { id } = request.params;
-			await knex.table('products').where({ id }).del();
+			await knex.table('services').where({ id }).del();
 			return response.send();
 		} catch (error) {
 			return response.status(400).json({ error: 'Error ao apagar' });

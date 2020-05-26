@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const SaltBcrypt = process.env.SALT;
+const SaltBcrypt = parseInt(process.env.SALT);
 
 exports.seed = async function (knex) {
 	// Deletes ALL existing entries

@@ -1,7 +1,7 @@
 const knex = require('../database');
 const bcrypt = require('bcrypt');
 
-const SaltBcrypt = parseInt(process.env.salt);
+const SaltBcrypt = parseInt(process.env.SALT);
 
 module.exports = {
 	// CRIAÇÃO DE USUARIOS
@@ -46,8 +46,16 @@ module.exports = {
 		const { name, surname, password, numberPhone, email } = request.body;
 		const { id } = request.params;
 
+		const newPassword = await bcrypt.hash(password, SaltBcrypt);
+
 		await knex('users')
-			.update({ name, surname, password, numberPhone, email })
+			.update({
+				name,
+				surname,
+				password: newPassword,
+				numberPhone,
+				email,
+			})
 			.where({ id });
 
 		return response.send();
@@ -58,10 +66,6 @@ module.exports = {
 	async delete(request, response) {
 		try {
 			const { id } = request.params;
-
-			console.log(id);
-
-			await knex('products').where({ user_id: id }).del();
 
 			await knex('users').where({ id }).del();
 
