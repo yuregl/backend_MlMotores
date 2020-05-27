@@ -43,10 +43,24 @@ module.exports = {
 	//ALTERAÇÃO DE DADOS DE USUÁRIO
 
 	async update(request, response) {
-		const { name, surname, password, numberPhone, email } = request.body;
+		const { name, surname, password, numberPhone } = request.body;
 		const { id } = request.params;
 
 		const newPassword = await bcrypt.hash(password, SaltBcrypt);
+
+		const user = knex.table('users').where({ id }).first();
+		const updated_at = new Date();
+
+		if (user.numberPhone === numberPhone) {
+			await knex('users')
+				.update({
+					name,
+					surname,
+					password: newPassword,
+					updated_at,
+				})
+				.where({ id });
+		}
 
 		await knex('users')
 			.update({
@@ -54,7 +68,7 @@ module.exports = {
 				surname,
 				password: newPassword,
 				numberPhone,
-				email,
+				updated_at,
 			})
 			.where({ id });
 

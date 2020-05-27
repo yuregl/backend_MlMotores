@@ -33,9 +33,11 @@ module.exports = {
 		const { id } = request.params;
 		const { product, status, value, description } = request.body;
 
+		const updated_at = new Date();
+
 		await knex
 			.table('services')
-			.update({ product, status, value, description })
+			.update({ product, status, value, description, updated_at })
 			.where({ id });
 
 		return response.send();

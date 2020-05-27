@@ -1,6 +1,8 @@
 const express = require('express');
 const routes = express.Router();
 
+const auth = require('./middlewares/auth');
+
 //Controllers
 
 const UserController = require('./controllers/UserController');
@@ -32,8 +34,8 @@ const {
 
 routes.post('/register', createUser, UserController.create);
 routes.get('/users', UserController.list);
-routes.put('/users/:id', updateUser, UserController.update);
-routes.delete('/users/:id', deleteUser, UserController.delete);
+routes.put('/users/:id', updateUser, auth, UserController.update);
+routes.delete('/users/:id', deleteUser, auth, UserController.delete);
 
 routes.post('/login', SessionController.login);
 
