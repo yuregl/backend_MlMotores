@@ -4,7 +4,8 @@ const SaltBcrypt = parseInt(process.env.SALT);
 exports.seed = async function (knex) {
 	// Deletes ALL existing entries
 
-	const newPassword = await bcrypt.hash('123', SaltBcrypt);
+	const newPassword = await bcrypt.hash('123456', SaltBcrypt);
+
 	return knex('users')
 		.del()
 		.then(function () {
@@ -16,6 +17,7 @@ exports.seed = async function (knex) {
 					password: newPassword,
 					numberPhone: '998352437',
 					email: 'yuregaldino@hotmail.com',
+					admin: true,
 				},
 			]);
 		});

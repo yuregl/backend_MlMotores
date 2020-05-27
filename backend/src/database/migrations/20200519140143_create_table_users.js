@@ -4,8 +4,9 @@ exports.up = function (knex) {
 		table.string('name').notNullable();
 		table.string('surname').notNullable();
 		table.string('password').notNullable();
-		table.string('numberPhone').unique().notNullable();
+		table.string('numberPhone').notNullable();
 		table.string('email').unique().notNullable();
+		table.boolean('admin').notNullable().defaultTo(false);
 
 		table.timestamp('created_at').defaultTo(knex.fn.now());
 		table.timestamp('updated_at').defaultTo(knex.fn.now());
