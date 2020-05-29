@@ -8,9 +8,7 @@ module.exports = {
 	async login(request, response) {
 		const { email, password } = request.body;
 
-		console.log(password);
-
-		const user = await knex.table('users').where('email', email).first();
+		const user = await knex.table('users').where({ email }).first();
 
 		if (!user) {
 			return response.status(400).json({ error: 'Não foi achado esse email' });

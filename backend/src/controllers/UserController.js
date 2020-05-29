@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const SaltBcrypt = parseInt(process.env.SALT);
 
 module.exports = {
-	// CRIAÇÃO DE USUARIOS
+	// creating users
 	async create(request, response) {
 		const { name, surname, password, numberPhone, email } = request.body;
 
@@ -30,17 +30,7 @@ module.exports = {
 		return response.status(201).send();
 	},
 
-	//LISTAGEM DE USUÁRIOS
-
-	async list(request, response) {
-		const results = await knex
-			.select('id', 'name', 'surname', 'numberPhone', 'email')
-			.from('users');
-
-		return response.json(results);
-	},
-
-	//ALTERAÇÃO DE DADOS DE USUÁRIO
+	//changing user data
 
 	async update(request, response) {
 		const { name, surname, password, numberPhone } = request.body;
@@ -75,7 +65,7 @@ module.exports = {
 		return response.send();
 	},
 
-	//DELAÇÃO DE USUÁRIO
+	//delete user
 
 	async delete(request, response) {
 		try {
