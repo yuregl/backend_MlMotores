@@ -6,7 +6,7 @@ const updateService = celebrate({
 		id_service: Joi.number().required(),
 	}),
 	[Segments.BODY]: Joi.object().keys({
-		produto: Joi.string().required(),
+		product: Joi.string().required(),
 		status: Joi.string().required(),
 		value: Joi.number().required(),
 		description: Joi.string().required(),

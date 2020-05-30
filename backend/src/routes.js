@@ -50,35 +50,35 @@ const {
 //Routes Admin Service
 
 routes.post(
-	'/admin/services',
+	'/admin/service',
 	createService,
 	authAdmin,
 	AdminServiceController.create
 );
 
 routes.delete(
-	'/admin/services',
+	'/admin/service',
 	deleteService,
 	authAdmin,
 	AdminServiceController.deleteID
 );
 
 routes.put(
-	'/admin/services',
+	'/admin/service',
 	updateService,
 	authAdmin,
 	AdminServiceController.update
 );
 
 routes.get(
-	'/admin/services',
+	'/admin/service',
 	listServiceAdmin,
 	authAdmin,
 	AdminServiceController.list
 );
 
 routes.get(
-	'/admin/services/listID',
+	'/admin/service/listID',
 	listServiceByIDAdmin,
 	authAdmin,
 	AdminServiceController.listIDUser
@@ -126,10 +126,10 @@ routes.post('/login', SessionController.login);
 
 //Routes Services
 
-routes.get('/services', listService, ServiceController.index);
+routes.get('/service', listService, auth, ServiceController.index);
 
 //Routes Services Unique
 
-routes.get('/services/unique/:id', lookServiceUnique, IDServiceUnique.product);
+routes.get('/service/unique', lookServiceUnique, IDServiceUnique.product);
 
 module.exports = routes;

@@ -1,8 +1,8 @@
 const { celebrate, Segments, Joi } = require('celebrate');
 
 const lookService = celebrate({
-	[Segments.PARAMS]: Joi.object().keys({
-		id: Joi.number().required(),
+	[Segments.QUERY]: Joi.object().keys({
+		id_service: Joi.number().required(),
 	}),
 });
 
