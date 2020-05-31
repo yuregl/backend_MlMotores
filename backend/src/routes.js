@@ -123,6 +123,8 @@ routes.delete('/users', deleteUser, auth, UserController.delete);
 //Route Login
 
 routes.post('/login', SessionController.login);
+routes.post('/forgetpassword', SessionController.sendEmailForgetPassword);
+routes.post('/forgetpassword/changepassword', SessionController.changePassword);
 
 //Routes Services
 

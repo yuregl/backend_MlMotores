@@ -9,19 +9,20 @@ let transporter = nodemailer.createTransport({
 	},
 });
 
-const emailSender = async (destiny, message) => {
+const emailSender = async (destiny, message, subject) => {
 	let mailOptions = {
 		from: process.env.EMAIL_SENDING,
 		to: destiny,
-		subject: 'Serviço ML Motores',
+		subject: subject ? subject : 'Serviço ML Motores',
 		text: message,
 	};
+	console.log(subject);
 
 	await transporter.sendMail(mailOptions, (err, info) => {
 		if (err) {
-			console.log('error', err);
+			console.log('error');
 		} else {
-			console.log('email sendig', info);
+			console.log('email sendig');
 		}
 	});
 };
