@@ -30,11 +30,14 @@ module.exports = {
 	//list users
 
 	async list(request, response) {
-		const results = await knex
-			.select('id', 'name', 'surname', 'numberPhone', 'email')
-			.from('users');
-
-		return response.json(results);
+		try {
+			const results = await knex
+				.select('id', 'name', 'surname', 'numberPhone', 'email')
+				.from('users');
+			return response.json(results);
+		} catch (err) {
+			return response.status(400).send({ error: 'Erro ao listar usuários' });
+		}
 	},
 
 	//Delete User send ID User

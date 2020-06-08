@@ -6,13 +6,16 @@ module.exports = {
 	async create(request, response) {
 		const { product, status, description } = request.body;
 
-		await knex('services').insert({
-			product,
-			status,
-			description,
-		});
+		const id = await knex('services').insert(
+			{
+				product,
+				status,
+				description,
+			},
+			'id'
+		);
 
-		return response.status(200).send();
+		return response.status(200).send({ id: id });
 	},
 
 	//service update without user id
