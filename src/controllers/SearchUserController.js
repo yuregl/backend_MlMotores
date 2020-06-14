@@ -8,27 +8,35 @@ const Secret = process.env.SECRET;
 
 module.exports = {
 	async login(request, response) {
-		const { email, password } = request.body;
+		try {
+			const { email, password } = request.body;
 
-		const user = await knex.table('users').where({ email }).first();
+			const user = await knex.table('users').where({ email }).first();
 
-		if (!user) {
-			return response.status(400).json({ error: 'Não foi achado esse email' });
-		}
+			if (!user) {
+				return response
+					.status(400)
+					.json({ error: 'Não foi achado esse email' });
+			}
 
-		if (!(await bcrypt.compare(password, user.password))) {
+			if (!(await bcrypt.compare(password, user.password))) {
+				return response
+					.status(400)
+					.json({ error: 'A senha não confere, tente novamente!' });
+			}
+
+			user.password = undefined;
+
+			const token = jwt.sign({ id: user.id }, Secret, {
+				expiresIn: 86400,
+			});
+
+			return response.send({ user, token });
+		} catch (error) {
 			return response
 				.status(400)
-				.json({ error: 'A senha não confere, tente novamente!' });
+				.send({ error: 'Erro ao tentar fazer o login' });
 		}
-
-		user.password = undefined;
-
-		const token = jwt.sign({ id: user.id }, Secret, {
-			expiresIn: 86400,
-		});
-
-		return response.send({ user, token });
 	},
 
 	async sendEmailForgetPassword(request, response) {
@@ -44,7 +52,7 @@ module.exports = {
 			}
 			const message =
 				'Foi requisitado uma troca de senha para esse email \n' +
-				`Para alterar, entrar no link http://localhost:3333/forgetpassword/changepassword?email=${email}`;
+				`Para alterar, entrar no link http://localhost:3000/forgetpassword/changepassword?email=${email}`;
 
 			const subject = 'Troca de senha';
 

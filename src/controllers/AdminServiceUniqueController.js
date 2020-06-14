@@ -4,34 +4,44 @@ module.exports = {
 	//service creation without user id
 
 	async create(request, response) {
-		const { product, status, description } = request.body;
+		try {
+			const { product, status, description } = request.body;
 
-		const id = await knex('services').insert(
-			{
-				product,
-				status,
-				description,
-			},
-			'id'
-		);
+			const id = await knex('services').insert(
+				{
+					product,
+					status,
+					description,
+				},
+				'id'
+			);
 
-		return response.status(200).send({ id: id });
+			return response.status(200).send({ id: id });
+		} catch (error) {
+			return response
+				.status(400)
+				.send({ error: 'error ao criar serviço sem ID' });
+		}
 	},
 
 	//service update without user id
 
 	async update(request, response) {
-		const { id_service } = request.query;
-		const { product, status, value, description } = request.body;
+		try {
+			const { id_service } = request.query;
+			const { product, status, value, description } = request.body;
 
-		const updated_at = new Date();
+			const updated_at = new Date();
 
-		await knex
-			.table('services')
-			.update({ product, status, value, description, updated_at })
-			.where({ id: id_service });
+			await knex
+				.table('services')
+				.update({ product, status, value, description, updated_at })
+				.where({ id: id_service });
 
-		return response.send();
+			return response.send();
+		} catch (error) {
+			return response.status(400).send({ error: 'error ao atualizar serviço' });
+		}
 	},
 
 	//service delete without user id
